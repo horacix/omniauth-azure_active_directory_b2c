@@ -54,8 +54,12 @@ module OmniAuth
         @policy_options ||= options.policy_options || (raise MissingOptionError, '`policy_options` not defined')
       end
 
+      def to_symbols(**h)
+        h.symbolize_keys
+      end
+
       def policy
-        @policy = Policy.new(**policy_options.symbolize_keys)
+        @policy = Policy.new(to_symbols(**policy_options))
       end
 
       def redirect_uri
